@@ -6,15 +6,29 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.2",
+    "@ant-design/icons": "^5.2.6",
+    "@apollo/client": "^3.8.6",
     "@auth0/nextjs-auth0": "^3.2.0",
+    "@darshanpatel2608/human-body-react": "^1.2.9",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@prisma/client": "^5.5.2",
+    "antd": "^5.10.1",
     "dotenv": "^16.3.1",
+    "graphql": "^16.8.1",
+    "highlight.js": "^11.9.0",
     "next": "13.5.4",
+    "prisma": "^5.5.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-fontawesome": "^1.7.1",
+    "reactstrap": "^9.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10",
@@ -22,5 +36,14 @@
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
     "tailwindcss": "^3"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }
+
