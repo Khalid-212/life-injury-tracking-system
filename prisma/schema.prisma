@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// This is your Prisma schema file.
 
 generator client {
   provider = "prisma-client-js"
@@ -11,16 +10,20 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String @unique
+  id       String   @id @default(uuid()) // Use auto-increment for user IDs
+  email    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  reports Injury[] // add the relation field
+  injuries Injury[] // Add the relation field
 }
 
 model Injury {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid()) // Use auto-increment for injury IDs
+  injuryDate  DateTime // Date of the injury
+  injuryTime  DateTime // Time of the injury
   injuryList Json[]
-  reportedBy User[] // add the opposite relation field
+  reportedBy  User     @relation(fields: [reportedById], references: [id])
+  reportedById String   // Store the user ID who reported the injury
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
