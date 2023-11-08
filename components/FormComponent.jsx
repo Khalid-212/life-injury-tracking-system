@@ -19,7 +19,7 @@ import {
 } from "antd";
 import { BodyComponent } from "./BodyMapComponent";
 import FormItem from "antd/es/form/FormItem";
-import { useStore } from "@/app/context/store";
+import { useStore } from "../app/context/store";
 import { data } from "autoprefixer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 // import { set } from "@auth0/nextjs-auth0/dist/session";
