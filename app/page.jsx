@@ -11,13 +11,13 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme } from "antd";
 import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { BodyComponent } from "@/components/BodyMapComponent";
+import { BodyComponent } from "../components/BodyMapComponent";
 import { useStore } from "./context/store";
-import Loading from "@/components/Loading";
-import ErrorMessage from "@/components/ErrorMessage";
-import AddInjuryComponent from "@/components/AddInjuryComponent";
-import ProfileComponent from "@/components/ProfileComponent";
-import ReportsComponent from "@/components/ReportsComponent";
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
+import AddInjuryComponent from "../components/AddInjuryComponent";
+import ProfileComponent from "../components/ProfileComponent";
+import ReportsComponent from "../components/ReportsComponent";
 
 const { Header, Sider, Content } = Layout;
 
@@ -27,7 +27,7 @@ const Dashboard = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const selectedParts = useStore((state) => state?.data);
-  console.log(selectedParts);
+  // console.log(selectedParts);
   const [Selected, setSelected] = useState("1");
 
   const { user, error, isLoading } = useUser();

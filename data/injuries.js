@@ -1,18 +1,22 @@
-const injuries = [
+const injuriesData = [
     {
-        "reportedBy": "fefe",
-        "injuryList": {
-            "Injury Date": "2023-10-02T08:37:08.237Z",
-            "Injury Time": "2023-10-31T08:37:10.483Z",
-            "right_leg_upper": "eew"
+      fullName: "Khalid Ibrahim",
+      injuryDate: new Date("2023-10-31T13:32:25.998Z"),
+      injuryTime: new Date("2023-10-31T13:32:29.850Z"),
+      injuryList: [
+        {
+          bodyPart: "Head",
+          description: "Head concussion",
         },
+        {
+          bodyPart: "Right Shoulder",
+          description: "A slight pain at the back",
+        },
+        {
+          bodyPart: "Right Arm",
+          description: "Knife injury",
+        },
+      ],
+      reportedById: user.id,
     },
-    {
-        "reportedBy": "fefe",
-        "injuryList": {
-            "Injury Date": "2023-10-02T08:37:08.237Z",
-            "Injury Time": "2023-10-31T08:37:10.483Z",
-            "right_leg_upper": "eew"
-        },
-    }
-]
+  ];
