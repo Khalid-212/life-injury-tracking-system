@@ -21,13 +21,13 @@ query Users {
 
 
 export const getuserinjury = gql`
-query Query($email: String!) {
+query InjuriesByUserEmail($email: String!) {
   injuriesByUserEmail(email: $email) {
+    injuryDate
     injuryList {
       bodyPart
       description
     }
-    injuryDate
     injuryTime
   }
 }

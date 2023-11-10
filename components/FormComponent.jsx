@@ -32,6 +32,53 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
+
+
+function convertFormResponseToInjury(data, user, bodyParts) {
+  const { values } = data;
+
+  const injuryData = {
+    injuryDate: new Date(values["Injury Date"]),
+    injuryTime: new Date(values["Injury Time"]),
+    injuryList: [],
+    reportedById: user.id,
+  };
+
+  bodyParts.forEach((part) => {
+    const partName = part.name;
+    const partValue = values[partName];
+
+    if (partValue) {
+      injuryData.injuryList.push({
+        bodyPart: partName,
+        description: partValue,
+      });
+    }
+  });
+
+  return injuryData;
+}
+
+const bodyPartsResponse = [
+  { "name": "head" },
+  { "name": "right_leg_upper" },
+  { "name": "chest" },
+  { "name": "right_shoulder" },
+  { "name": "right_arm" },
+  { "name": "right_hand" },
+  { "name": "stomach" },
+  { "name": "left_leg_upper" },
+  { "name": "left_leg_lower" },
+  { "name": "right_leg_lower" },
+  { "name": "right_foot" },
+  { "name": "left_foot" },
+  { "name": "left_hand" },
+  { "name": "left_arm" },
+  { "name": "left_shoulder" },
+];
+
+
+
 // get the store
 
 const FormComponent = () => {
@@ -70,6 +117,8 @@ const FormComponent = () => {
       user: user.name,
     };
     console.log(formData);
+    // convertFormDataToInjury(formData, user.name)
+    console.log(convertFormResponseToInjury(formData, formData.user, bodyPartsResponse))
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -138,7 +187,9 @@ const FormComponent = () => {
         </Form.Item>
         <Form.Item>
           <h2>injuries:</h2>
+        {selectedItems.length <= 0 ? (
           <p>select a body part to report injury</p>
+          ):null}
         </Form.Item>
         <div>
           {selectedItems.length > 0 ? (

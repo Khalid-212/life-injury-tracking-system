@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import {
   AntDesignOutlined,
   MenuFoldOutlined,
@@ -31,6 +31,9 @@ const Dashboard = () => {
   const [Selected, setSelected] = useState("1");
 
   const { user, error, isLoading } = useUser();
+  if(!user){
+    return <div>Loading...</div>
+  }
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   return (

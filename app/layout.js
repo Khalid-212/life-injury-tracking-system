@@ -2,9 +2,10 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { StoreProvider, useStore } from '../app/context/store'
-import { ApolloProvider } from '@apollo/client';
-import client from './apolloClient/apolloClient';
-import { ApolloWrapper } from "./ApolloWrapper";
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloWrapper } from './ApolloWrapper';
+import { useApollo } from './ApolloWrapper';
+
 
 
 
@@ -23,7 +24,11 @@ export default async function RootLayout({ children }) {
         <StoreProvider>
       <body className={inter.className}>
         <ApolloWrapper>
+        {/* <ApolloProvider client={client}> */}
+        {/* <ApolloProvider> */}
+        {/* <ApolloProvider client={apollo}> */}
         {children}
+        {/* </ApolloProvider> */}
         </ApolloWrapper>
         </body>
       </StoreProvider>

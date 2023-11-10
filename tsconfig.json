@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "graphql/schema.ts", "app/api/graphql.js", "graphql/resolvers.ts"  ],
+, "graphql/schema.ts", "app/api/graphql.js", "graphql/resolvers.ts", "components/BodyMapComponent.jsx", "components/Card.jsx", "components/TableComponent.tsx"  ],
   "exclude": [
     "node_modules"
   ]
