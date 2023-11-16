@@ -7,10 +7,11 @@ export const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
     injuries: [Injury]!
-  }
+  }  
 
   type Injury {
     id: String!
+    injuredPersonName: String!
     injuryDate: String!
     injuryTime: String!
     injuryList: [InjuryList]!
@@ -30,5 +31,23 @@ export const typeDefs = gql`
     injury(id: String!): Injury!
     user(id: String!): User!
     injuriesByUserEmail(email: String!): [Injury]!
+  }
+  type Mutation {
+    createUser(email: String!): User
+    createInjury(
+      injuredPersonName: String
+      injuryDate: String
+      injuryTime: String
+      injuryList: [InjuryListInput]
+      reportedBy: String
+    ): Injury
+  }
+  input InjuryListInput {
+    bodyPart: String
+    description: String
+  }
+
+  type Subscription {
+    injuryAdded: Injury
   }
 `;

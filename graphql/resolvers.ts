@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
+import { Context } from "../app/api/graphql/route";
 
 const prisma = new PrismaClient();
 
@@ -76,6 +77,65 @@ const resolvers = {
       }
 
       return user.injuries;
+    },
+  },
+  Mutation: {
+    createInjury: async (parent, args, context) => {
+      console.log("Incoming args:", args);
+      try {
+        console.log("Incoming args:", args);
+
+        // Ensure reportedBy is provided in the args
+        if (!args.reportedBy) {
+          throw new Error("Missing reportedBy information.");
+        }
+
+        const injury = await prisma.injury.create({
+          data: {
+            ...args,
+            reportedBy: {
+              connect: {
+                email: args.reportedBy,
+              },
+            },
+          },
+        });
+
+        console.log("Injury created:", injury);
+
+        return injury;
+      } catch (error) {
+        // Log detailed error information for debugging
+        console.error("Error creating injury:", error);
+
+        // Rethrow the error or handle it appropriately
+        throw new Error("Unable to create injury.");
+      }
+    },
+    createUser: async (_parent, { email }, context) => {
+      try {
+        // Check if the user already exists
+        const existingUser = await prisma.user.findUnique({
+          where: { email },
+        });
+
+        if (existingUser) {
+          throw new Error("User with this email already exists");
+        }
+
+        // If the user doesn't exist, create a new user
+        const newUser = await prisma.user.create({
+          data: {
+            email,
+          },
+        });
+
+        return newUser;
+      } catch (error) {
+        console.error("Error creating user:", error);
+        throw new Error("Unable to create user. " + error.message);
+      }
+      console.log("Exiting createUser resolver");
     },
   },
   User: {

@@ -18,12 +18,13 @@ model User {
 }
 
 model Injury {
-  id          String   @id @default(uuid()) // Use auto-increment for injury IDs
-  injuryDate  DateTime // Date of the injury
-  injuryTime  DateTime // Time of the injury
-  injuryList Json[]
-  reportedBy  User     @relation(fields: [reportedById], references: [id])
-  reportedById String   // Store the user ID who reported the injury
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(uuid())
+  injuryDate       DateTime
+  injuryTime       DateTime
+  injuredPersonName String
+  injuryList       Json[]
+  reportedBy       User     @relation(fields: [reportedById], references: [id])
+  reportedById     String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
