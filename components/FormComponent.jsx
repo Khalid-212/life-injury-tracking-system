@@ -22,6 +22,8 @@ import FormItem from "antd/es/form/FormItem";
 import { useStore } from "../app/context/store";
 import { data } from "autoprefixer";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useMutation } from "@apollo/client";
+import { CREATE_INJURY } from "../graphql/mutations";
 // import { set } from "@auth0/nextjs-auth0/dist/session";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -32,16 +34,15 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
-
-
 function convertFormResponseToInjury(data, user, bodyParts) {
   const { values } = data;
 
   const injuryData = {
+    injuredPersonName: values["Full Name"],
     injuryDate: new Date(values["Injury Date"]),
     injuryTime: new Date(values["Injury Time"]),
     injuryList: [],
-    reportedById: user.id,
+    reportedById: user,
   };
 
   bodyParts.forEach((part) => {
@@ -60,28 +61,27 @@ function convertFormResponseToInjury(data, user, bodyParts) {
 }
 
 const bodyPartsResponse = [
-  { "name": "head" },
-  { "name": "right_leg_upper" },
-  { "name": "chest" },
-  { "name": "right_shoulder" },
-  { "name": "right_arm" },
-  { "name": "right_hand" },
-  { "name": "stomach" },
-  { "name": "left_leg_upper" },
-  { "name": "left_leg_lower" },
-  { "name": "right_leg_lower" },
-  { "name": "right_foot" },
-  { "name": "left_foot" },
-  { "name": "left_hand" },
-  { "name": "left_arm" },
-  { "name": "left_shoulder" },
+  { name: "head" },
+  { name: "right_leg_upper" },
+  { name: "chest" },
+  { name: "right_shoulder" },
+  { name: "right_arm" },
+  { name: "right_hand" },
+  { name: "stomach" },
+  { name: "left_leg_upper" },
+  { name: "left_leg_lower" },
+  { name: "right_leg_lower" },
+  { name: "right_foot" },
+  { name: "left_foot" },
+  { name: "left_hand" },
+  { name: "left_arm" },
+  { name: "left_shoulder" },
 ];
-
-
 
 // get the store
 
 const FormComponent = () => {
+  const [createInjury] = useMutation(CREATE_INJURY);
   const da = useStore();
   const { user, error, isLoading } = useUser();
   const jsonData = da.Data;
@@ -110,16 +110,42 @@ const FormComponent = () => {
   useEffect(() => {
     handleData();
   }, [jsonData]);
+
   const onFinish = (values) => {
-    // console.log("Success:", values, selectedItems);
     const formData = {
       values: values,
-      user: user.name,
+      reporter: user.name,
     };
-    console.log(formData);
-    // convertFormDataToInjury(formData, user.name)
-    console.log(convertFormResponseToInjury(formData, formData.user, bodyPartsResponse))
+  
+    const injuryData = convertFormResponseToInjury(
+      formData,
+      user.name,
+      bodyPartsResponse
+    );
+    console.log("Injury Data:", injuryData);
+    
+  
+    createInjury({
+      variables:{
+        injuryDate: injuryData.injuryDate,
+        injuryTime: injuryData.injuryTime,
+        injuredPersonName: injuryData.injuredPersonName,
+        injuryList: injuryData.injuryList,
+        reportedBy: injuryData.reportedById,
+      }
+    })
+      .then((response) => {
+        // Handle success if needed
+        console.log("Injury created:", response);
+      })
+      .catch((error) => {
+        // Handle error with more details
+        console.error("Error creating injury:", error.message);
+        console.error("Error details:", error.graphQLErrors);
+      });
   };
+  
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -127,7 +153,6 @@ const FormComponent = () => {
 
   return (
     <>
-
       <Form
         name="basic"
         labelCol={{
@@ -179,7 +204,7 @@ const FormComponent = () => {
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: "Please input Injured Person Name!",
             },
           ]}
         >
@@ -187,9 +212,9 @@ const FormComponent = () => {
         </Form.Item>
         <Form.Item>
           <h2>injuries:</h2>
-        {selectedItems.length <= 0 ? (
-          <p>select a body part to report injury</p>
-          ):null}
+          {selectedItems.length <= 0 ? (
+            <p>select a body part to report injury</p>
+          ) : null}
         </Form.Item>
         <div>
           {selectedItems.length > 0 ? (
