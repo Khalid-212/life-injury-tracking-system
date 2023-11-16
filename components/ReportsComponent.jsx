@@ -1,20 +1,18 @@
 import { useQuery } from "@apollo/client";
-import { getuserinjury } from "../graphql/queries";
+import { GET_USER_INJURY } from "../graphql/queries";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { format } from "date-fns";
-import Chart from "chart.js/auto";
 import PieChart from "./Piechart";
 import { useState } from "react";
-import { Data } from "./data";
-import Card from "antd/es/card/Card";
-import { Statistic } from "antd";
-import TableComponent from "./TableComponent";
+import { Card, Statistic } from "antd";
+
+// import TableComponent from "./TableComponent";
+// import {nodata} from "../../public/assets/nodata.svg"
 
 function ReportsComponent() {
   const { user } = useUser();
   const email = user?.name;
 
-  const { loading, error, data } = useQuery(getuserinjury, {
+  const { loading, error, data } = useQuery(GET_USER_INJURY, {
     variables: {
       email: email,
     },
@@ -59,11 +57,11 @@ function ReportsComponent() {
   // console.log(Data.map((data) => data.userGain))
 
   const [chartData, setChartData] = useState({
-    labels: lables?.map((lable) => lable),
+    labels: lables?lables?.map((lable) => lable):["head","head","head"],
     datasets: [
       {
         label: "Injury reports by user",
-        data: Data?.map((data) => data.userGain),
+        data: Data?Data?.map((data) => data.userGain):[100,200,300],
         backgroundColor: [
           "#ADC6FF",
           "#1D39C4",
@@ -91,89 +89,53 @@ function ReportsComponent() {
     // Handle the case where date is not a valid Date object
     return "Invalid Date";
   };
-  console.log(formatDate(1698759145998));
-  const formatDateTime = (date) => {
-    if (date) {
-      const formattedDate = new Date(Number.isNaN(Number(date)) ? date : Number(date));
-      if (!isNaN(formattedDate.getTime())) {
-        return formattedDate.toLocaleString(); // This includes both date and time
+
+  const formatedTime = (time)=>{
+    if (time) {
+      const formattedTime = new Date(Number.isNaN(Number(time)) ? time : Number(time));
+      if (!isNaN(formattedTime.getTime())) {
+        return formattedTime.toLocaleTimeString(); // This includes both date and time
       }
     }
     // Handle the case where date is not a valid Date object
     return "Invalid Date";
-  };
+  }
 
   if (loading) return "Loading...";
   if (error) return `Error: Refresh the page`;
 
   return (
-    <div
-      className="ReportComponent"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <h1>Reports</h1>
-      <Statistic title="Total Report" value={Data.length} precision={2} />
-      <div
-        style={{
-          width: "400px",
-          margin: "auto",
-        }}
-      >
-        <PieChart chartData={chartData} />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          flexDirection: "column",
-          // justifyContent: "center",
-          // alignItems: "center",
-          // width:"100%",
-          // border:"1px solid black",
-        }}
-      >
-        {injuries.map((userInjury, index) => (
-          <div
-            style={{
-              display: "flex",
-              padding: "10px",
-            }}
-            key={index}
-          >
-            <h2>{userInjury.fullName}</h2>
-            {/* <ul> */}
-            {userInjury.injuryList.map((injury, i) => (
-              <Card style={{ margin: "10px", display:"flex" }} key={injury.index}>
-                <li style={{ justifyContent:'space-between', gap:'3rem' }} key={i}>
-                  <h3>Body Part: {injury.bodyPart}</h3>
-                  <p>Injury Date: {formatDate(userInjury.injuryDate)}</p>
-                  <p>Injury Time: {formatDateTime(userInjury.injuryTime)}</p>
-                  <p>Description: {injury.description}</p>
-                </li>
-              </Card>
-              // <TableComponent key={i} data={{
-              //   name: injury.fullName,
-              //   bodyPart: injury.bodyPart,
-              //   injuryDate: formatDate(userInjury.injuryDate),
-              //   injuryTime: formatDate(userInjury.injuryTime),
-              //   description: injury.description,
-              // }} />
-            ))}
-            {/* </ul> */}
+    <div className="ReportComponent">
+      <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column" }}>
+        {/* <PieChart chartData={chartData} /> */}
+        {injuries?.length <= 0 ? (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
+            <h1>No reports</h1>
           </div>
-        ))}
+        ) : (
+          injuries.map((userInjury, index) => (
+            <div style={{ display: "flex", padding: "10px" }} key={index}>
+              <h2>{userInjury?.fullName}</h2>
+              {userInjury?.injuryList?.length > 0 ? (
+                userInjury.injuryList.map((injury, i) => (
+                  <Card style={{ margin: "10px", display: "flex" }} key={i}>
+                    <li style={{ justifyContent: 'space-between', gap: '3rem' }} key={i}>
+                      <h3><strong>Name:</strong> {userInjury?.injuredPersonName}</h3>
+                      <br />
+                      <p><strong>Body Part:</strong> {injury?.bodyPart}</p>
+                      <p><strong>Injury Date:</strong> {formatDate(userInjury?.injuryDate)}</p>
+                      <p><strong>Injury Time:</strong> {formatedTime(userInjury?.injuryTime)}</p>
+                      <p><strong>Description:</strong> {injury?.description}</p>
+                    </li>
+                  </Card>
+                ))
+              ) : (
+                <p>No injuries reported</p>
+              )}
+            </div>
+          ))
+        )}
       </div>
-      {/* <TableComponent data={
-        injuries.map((userInjury, index) => (
-          userInjury.injuryList.map((injury, i) => ({
-            key: i,
-            name: userInjury.fullName,
-          }))
-        ))
-      } /> */}
     </div>
   );
 }
