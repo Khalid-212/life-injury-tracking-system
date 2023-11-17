@@ -1,12 +1,10 @@
-FROM node:12.18.3-alpine3.12
-
-# Create app directory
+FROM node:14-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 

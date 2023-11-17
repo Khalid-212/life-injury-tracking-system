@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_USER_INJURY } from "../graphql/queries";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import PieChart from "./Piechart";
 import { useState } from "react";
 import { Card, Statistic } from "antd";
 
@@ -21,8 +20,6 @@ function ReportsComponent() {
   const injuries = data?.injuriesByUserEmail;
   console.log(injuries);
 
-  // console.log("injurydata")
-  // const lables =[]
   const createLables = () => {
     const lables = [];
     const temp = [];
@@ -54,7 +51,6 @@ function ReportsComponent() {
     return temp;
   };
   const Data = createData();
-  // console.log(Data.map((data) => data.userGain))
 
   const [chartData, setChartData] = useState({
     labels: lables?lables?.map((lable) => lable):["head","head","head"],
@@ -107,7 +103,6 @@ function ReportsComponent() {
   return (
     <div className="ReportComponent">
       <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column" }}>
-        {/* <PieChart chartData={chartData} /> */}
         {injuries?.length <= 0 ? (
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
             <h1>No reports</h1>
