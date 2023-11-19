@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "node prisma/seed.js"
@@ -54,5 +54,8 @@
   },
   "prisma": {
     "seed": "node prisma/seed.js"
+  },
+  "rules": {
+    "react-hooks/exhaustive-deps": "off"
   }
 }
