@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Life Injury Tracking System
+
+The Life Injury Tracking System is a web application designed to [provide a brief description of what your project does].
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- [List some key features or functionalities of your project]
 
 ## Getting Started
 
-First, run the development server:
+[Provide instructions on how to get your project up and running]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[Specify any dependencies or software needed to run the project]
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clone the repository:
 
-## Learn More
+   ```bash
+   git clone https://github.com/Khalid-212/life-injury-tracking-system.git
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   cd life-injury-tracking-system
+   npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Development
 
-## Deploy on Vercel
+  To run the project in development mode, use the following command:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Production
+To run the project in production mode, use the following command:
+
+## Production Build
+    npm run build
+
+## Run Production Server
+    
+    git clone https://github.com/your-username/life-injury-tracking-system.git
+
+### Technologies Used
+
+Next js, graphql, prisma, Auth0, apollo
+
+### Contributing
+We welcome contributions from the community. If you'd like to contribute to the project, please follow these guidelines:
+
+1. Fork the repository and create a new branch.
+2. Make your changes and ensure the code passes linting and testing.
+3. Submit a pull request with a clear description of your changes.
+
+##Development Setup
+1. Clone your forked repository:
+   ```bash
+   git clone https://github.com/your-username/life-injury-tracking-system.git
+2. Install dependencies:
+   ```bash
+   cd life-injury-tracking-system
+   npm install
+3. Make your changes and run tests:
+   ```bash
+   npm test
+4. Commit your changes and push them to your branch:
+   ```bash
+   git add .
+   git commit -m "Your descriptive commit message"
+   git push origin your-branch-name
+5. Open a pull request on GitHub.
+
+###Code Style
+Follow the existing code style and conventions. If you're not sure, feel free to ask for clarification.
+
+###Issues and Bugs
+If you find any issues or bugs, please open an issue on the issue tracker.
+
+
+### License
+This project is licensed under the MIT License.
