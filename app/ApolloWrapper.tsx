@@ -30,7 +30,7 @@ export function ApolloWrapper({
 
   function makeClient() {
     const httpLink = new HttpLink({
-      uri: "http://localhost:3000/api/graphql",
+      uri: "https://life-injury-tracking-system.vercel.app/api/graphql",
       fetchOptions: { cache: "no-store" },
     });
 
