@@ -19,20 +19,20 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
-
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <UserProvider>
         <StoreProvider>
-      <body className={inter.className}>
-        <ApolloWrapper>
-        {/* <ApolloProvider client={client}> */}
-        {/* <ApolloProvider> */}
-        {/* <ApolloProvider client={apollo}> */}
-        {children}
-        {/* </ApolloProvider> */}
-        </ApolloWrapper>
-        </body>
-      </StoreProvider>
+          <body className={inter.className}>
+            <ApolloWrapper>
+              {/* <ApolloProvider client={client}> */}
+              {/* <ApolloProvider> */}
+              {/* <ApolloProvider client={apollo}> */}
+              {children}
+              {/* </ApolloProvider> */}
+            </ApolloWrapper>
+          </body>
+        </StoreProvider>
       </UserProvider>
     </html>
-  )
+  );
 }
